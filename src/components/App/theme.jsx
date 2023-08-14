@@ -8,6 +8,8 @@ export const theme = {
     info: '#17a2b8',
     light: '#f8f9fa',
     dark: '#343a40',
+    white: '#ffffff',
+    accent: '#1b2a71',
   },
 
   space: [0, 2, 4, 8, 16, 32, 64, 128, 256],

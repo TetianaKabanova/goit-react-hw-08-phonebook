@@ -1,6 +1,6 @@
 import { FilterWrap, FilterLabel, FilterInput } from './Filter.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter } from 'redux/phonebookReducer';
+import { setFilter } from 'redux/authReducer';
 import { selectFilter } from 'redux/selectors';
 
 export const Filter = ({ title }) => {
