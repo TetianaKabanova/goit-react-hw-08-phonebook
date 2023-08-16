@@ -12,6 +12,7 @@ import {
 } from './App.styled';
 import { Spin } from 'antd';
 import { HomeOutlined } from '@ant-design/icons';
+
 const HomePage = lazy(() => import('pages/HomePage'));
 const RegisterPage = lazy(() => import('pages/RegisterPage'));
 const LoginPage = lazy(() => import('pages/LoginPage'));
