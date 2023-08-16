@@ -9,7 +9,8 @@ export const theme = {
     light: '#f8f9fa',
     dark: '#343a40',
     white: '#ffffff',
-    accent: '#1b2a71',
+    accent: '#003eb3',
+    mainBackground: '#f0f5ff',
   },
 
   space: [0, 2, 4, 8, 16, 32, 64, 128, 256],
@@ -33,6 +34,6 @@ export const theme = {
   },
   boxShadow: {
     textShadow: '0 1px 1px rgba(236, 230, 230, 0.05)',
-    boxShadow: ' inset 0 -5px 45px rgba(100, 100, 100, 0.2)',
+    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
   },
 };

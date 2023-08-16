@@ -1,21 +1,21 @@
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ContactList } from 'components/ContactList/ContactList';
-import { Filter } from 'components/Filter/Filter';
-import { ContactForm } from 'components/ContactForm/ContactForm';
-import { Section } from 'components/Section/Section';
-import { Container, StyledNavLink } from './App.styled';
 import { lazy, Suspense, useEffect } from 'react';
-import Loader from 'components/Loader/Loader';
 import { Route, Routes } from 'react-router-dom';
+import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthentificated, selectToken } from 'redux/authReducer';
 import { logoutUserThunk, refreshUserThunk } from 'redux/operations';
-
+import {
+  Header,
+  StyledNavBar,
+  StyledLogOutButton,
+  StyledNavLink,
+} from './App.styled';
+import { Spin } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
 const HomePage = lazy(() => import('pages/HomePage'));
 const RegisterPage = lazy(() => import('pages/RegisterPage'));
 const LoginPage = lazy(() => import('pages/LoginPage'));
-const ContactsPage = lazy(() => import('pages/ContactsPage'));
+const ContactsPage = lazy(() => import('pages/ContactsPage/ContactsPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -23,54 +23,61 @@ export const App = () => {
   const authentificated = useSelector(selectAuthentificated);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || authentificated) return;
 
     dispatch(refreshUserThunk());
-  }, [token, dispatch]);
+  }, [token, dispatch, authentificated]);
 
   const handleLogOut = () => {
     dispatch(logoutUserThunk());
   };
   return (
     <div>
-      <header>
-        <nav>
-          <StyledNavLink to="/">Home</StyledNavLink>
+      <Header>
+        <StyledNavBar>
+          <StyledNavLink type="primary" to="/">
+            Home
+            <HomeOutlined />
+          </StyledNavLink>
+
           {authentificated ? (
             <>
-              <StyledNavLink to="/contacts">Contacts</StyledNavLink>
-              <button onClick={handleLogOut}>Log Out</button>
+              <StyledNavLink type="primary" to="/contacts">
+                Contacts
+              </StyledNavLink>
+              <StyledLogOutButton type="primary" onClick={handleLogOut}>
+                Log Out
+              </StyledLogOutButton>
             </>
           ) : (
             <>
-              <StyledNavLink to="/login">Login</StyledNavLink>
-              <StyledNavLink to="/register">Register</StyledNavLink>
+              <StyledNavLink type="primary" to="/login">
+                Login
+              </StyledNavLink>
+              <StyledNavLink type="primary" to="/register">
+                Register
+              </StyledNavLink>
             </>
           )}
-        </nav>
-      </header>
+        </StyledNavBar>
+      </Header>
       <main>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Spin />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/contacts" element={<ContactsPage />} />
+            <Route
+              path="/contacts"
+              element={
+                <PrivateRoute redirectTo="/login">
+                  <ContactsPage />
+                </PrivateRoute>
+              }
+            />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </Suspense>
       </main>
     </div>
-
-    // <Container>
-    //   <Section title="Phonebook">
-    //     <ContactForm />
-    //   </Section>
-    //   <ToastContainer />
-    //   <Section title="Contacts">
-    //     <Filter title="Find contact by name" />
-    //     <ContactList />
-    //   </Section>
-    //   <ToastContainer />
-    // </Container>
   );
 };

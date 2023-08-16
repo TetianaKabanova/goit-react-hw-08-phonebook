@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addContact, getContacts, deleteContact } from './api';
 import {
   loginUserThunk,
   logoutUserThunk,
@@ -18,11 +17,6 @@ const initialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    setFilter: (state, action) => {
-      state.filter = action.payload;
-    },
-  },
   extraReducers: builder => {
     builder
       .addCase(registerUserThunk.pending, state => {
