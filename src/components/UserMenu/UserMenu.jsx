@@ -1,12 +1,12 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import userAuth from './userAuth';
+// import React from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import userAuth from './userAuth';
 
-const UserMenu = () => {
-  const { user } = userAuth();
-  const dispatch = useDispatch();
+// const UserMenu = () => {
+//   const { user } = userAuth();
+//   const dispatch = useDispatch();
 
-  return <div>UserMenu</div>;
-};
+//   return <div>UserMenu</div>;
+// };
 
-export default UserMenu;
+// export default UserMenu;
