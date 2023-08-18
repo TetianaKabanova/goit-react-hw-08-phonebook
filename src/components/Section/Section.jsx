@@ -5,12 +5,12 @@ export const Section = ({ children, title }) => {
   return (
     <SectionWrapper>
       {title && <TitleName>{title}</TitleName>}
-      {children}
+      {children !== undefined && children}
     </SectionWrapper>
   );
 };
 
 Section.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.any.isRequired,
+  children: PropTypes.node.isRequired,
 };

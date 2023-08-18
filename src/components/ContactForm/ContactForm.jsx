@@ -4,96 +4,97 @@ import {
   Input,
   SubmitButton,
   Wrapper,
+  Icon,
 } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { toast } from 'react-toastify';
 import { notifyOptions } from 'components/Notification/notifyOptions';
-import { nanoid } from 'nanoid';
-import { addContact, getContacts } from 'redux/api';
-import { getVisibleContacts } from 'redux/selectors';
-import { useEffect, useState } from 'react';
+
+import { addContactThunk } from 'redux/contactsOperations';
+import {
+  PhoneOutlined,
+  UserAddOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import { selectUserContacts } from 'redux/contactsReducer';
 
 export const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const contacts = useSelector(getVisibleContacts);
+  const contacts = useSelector(selectUserContacts);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getContacts());
-  }, [dispatch]);
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-      default:
-        return;
-    }
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    const normalizedName = name.toLowerCase();
-    const existingContact = contacts.find(
-      contact => contact.name.toLowerCase() === normalizedName
-    );
-
-    if (existingContact) {
-      toast.error(`Contact with name "${name}" already exists!`, notifyOptions);
-      reset();
-      return;
-    }
-
-    dispatch(addContact({ id: nanoid(), name, number }));
-    reset();
-    toast.success(
-      `Contact with name ${name} is added to the contact list!`,
-      notifyOptions
+  const newContactCheck = newContact => {
+    return contacts.filter(
+      contact => contact.name?.toLowerCase() === newContact.name?.toLowerCase()
     );
   };
 
-  const reset = () => {
-    setName('');
-    setNumber('');
+  const contactFormSubmitHandler = newContact => {
+    if (newContactCheck(newContact).length > 0) {
+      toast.error(
+        `Contact with name ${newContact.name} already exists!`,
+        notifyOptions
+      );
+
+      return false;
+    } else {
+      dispatch(addContactThunk(newContact));
+
+      toast.success(
+        `Contact with name ${newContact.name} is added to the contact list!`,
+        notifyOptions
+      );
+      return true;
+    }
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const name = form.elements.name.value;
+    const number = form.elements.number.value;
+
+    if (contactFormSubmitHandler({ name, number })) {
+      form.reset();
+    }
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <Wrapper>
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name">
+          Name <UserOutlined />
+        </Label>
         <Input
+          id="name"
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          placeholder="Contact name"
           required
-          value={name}
-          onChange={handleChange}
         />
       </Wrapper>
-
       <Wrapper>
-        <Label htmlFor="number">Number</Label>
+        <Label htmlFor="number">
+          Number <PhoneOutlined />
+        </Label>
         <Input
+          id="number"
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          placeholder="Contact number"
           required
-          value={number}
-          onChange={handleChange}
         />
       </Wrapper>
-
-      <SubmitButton type="submit">Add contact</SubmitButton>
+      <SubmitButton type="submit">
+        Add contact
+        <Icon>
+          <UserAddOutlined />
+        </Icon>
+      </SubmitButton>
     </Form>
   );
 };

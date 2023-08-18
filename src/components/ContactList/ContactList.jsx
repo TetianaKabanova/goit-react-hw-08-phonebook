@@ -5,20 +5,21 @@ import {
   DeleteButton,
 } from './ContactList.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/api';
 import { toast } from 'react-toastify';
 import { notifyOptions } from 'components/Notification/notifyOptions';
-import { getVisibleContacts } from 'redux/selectors';
+import { deleteContactThunk } from 'redux/contactsOperations';
+import { UserDeleteOutlined } from '@ant-design/icons';
+import { selectUserContacts } from 'redux/contactsReducer';
 
 export const ContactList = () => {
+  const contacts = useSelector(selectUserContacts);
   const dispatch = useDispatch();
-  const contacts = useSelector(getVisibleContacts);
 
-  const handleDeleteContact = contact => {
-    dispatch(deleteContact(contact.id));
+  const handleDeleteContact = contactId => {
+    dispatch(deleteContactThunk(contactId));
 
     toast.info(
-      `Contact with with name ${contact.name} has been deleted!`,
+      `Contact with with name ${contactId.name} has been deleted!`,
       notifyOptions
     );
   };
@@ -35,6 +36,7 @@ export const ContactList = () => {
             onClick={() => handleDeleteContact({ id, name })}
           >
             Delete
+            <UserDeleteOutlined />
           </DeleteButton>
         </ContactItem>
       ))}

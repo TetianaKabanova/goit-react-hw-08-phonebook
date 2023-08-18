@@ -84,5 +84,3 @@ export const selectUserData = state => state.auth.userData;
 export const selectAuthentificated = state => state.auth.authentificated;
 
 export const authReducer = authSlice.reducer;
-
-export const { setFilter } = authSlice.actions;

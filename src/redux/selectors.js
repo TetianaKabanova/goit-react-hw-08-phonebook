@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 
-export const selectContacts = state => state.phonebook.contacts.items;
-export const selectIsLoading = state => state.phonebook.contacts.isLoading;
-export const selectError = state => state.phonebook.contacts.error;
-export const selectFilter = state => state.phonebook.filter;
+export const selectUserContacts = state => state.contacts.contacts;
+export const selectContactsIsLoading = state => state.contacts.isLoading;
+export const selectContactsError = state => state.contacts.error;
+export const selectContactsFilter = state => state.contacts.filter;
 
 export const getVisibleContacts = createSelector(
-  selectContacts,
-  selectFilter,
+  selectUserContacts,
+  selectContactsFilter,
   (contacts, filter) => {
     const normalizedFilter = filter ? filter.toLowerCase() : '';
 

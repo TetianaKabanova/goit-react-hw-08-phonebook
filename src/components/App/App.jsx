@@ -9,13 +9,15 @@ import {
   StyledNavBar,
   StyledLogOutButton,
   StyledNavLink,
+  Icon,
 } from './App.styled';
 import { Spin } from 'antd';
-import { HomeOutlined } from '@ant-design/icons';
+import { LogoutOutlined } from '@ant-design/icons';
+import { ToastContainer } from 'react-toastify';
 
-const HomePage = lazy(() => import('pages/HomePage'));
-const RegisterPage = lazy(() => import('pages/RegisterPage'));
-const LoginPage = lazy(() => import('pages/LoginPage'));
+const HomePage = lazy(() => import('pages/HomePage/HomePage'));
+const RegisterPage = lazy(() => import('pages/RegistrePage/RegisterPage'));
+const LoginPage = lazy(() => import('pages/LoginPage/LoginPage'));
 const ContactsPage = lazy(() => import('pages/ContactsPage/ContactsPage'));
 
 export const App = () => {
@@ -36,28 +38,22 @@ export const App = () => {
     <div>
       <Header>
         <StyledNavBar>
-          <StyledNavLink type="primary" to="/">
-            Home
-            <HomeOutlined />
-          </StyledNavLink>
+          <StyledNavLink to="/">Home</StyledNavLink>
 
           {authentificated ? (
             <>
-              <StyledNavLink type="primary" to="/contacts">
-                Contacts
-              </StyledNavLink>
-              <StyledLogOutButton type="primary" onClick={handleLogOut}>
+              <StyledNavLink to="/contacts">Contacts</StyledNavLink>
+              <StyledLogOutButton type="submit" onClick={handleLogOut}>
                 Log Out
+                <Icon>
+                  <LogoutOutlined />
+                </Icon>
               </StyledLogOutButton>
             </>
           ) : (
             <>
-              <StyledNavLink type="primary" to="/login">
-                Login
-              </StyledNavLink>
-              <StyledNavLink type="primary" to="/register">
-                Register
-              </StyledNavLink>
+              <StyledNavLink to="/login">Login</StyledNavLink>
+              <StyledNavLink to="/register">Register</StyledNavLink>
             </>
           )}
         </StyledNavBar>
@@ -78,6 +74,7 @@ export const App = () => {
             <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </Suspense>
+        <ToastContainer />
       </main>
     </div>
   );

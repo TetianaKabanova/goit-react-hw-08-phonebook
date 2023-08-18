@@ -6,7 +6,7 @@ import {
 } from './contactsOperations';
 
 const initialState = {
-  contacts: null,
+  contacts: [],
   isLoading: false,
   error: null,
   filter: '',
@@ -69,7 +69,6 @@ const contactsSlice = createSlice({
 });
 
 export const { setFilter } = contactsSlice.actions;
-
 export const selectUserContacts = state => state.contacts.contacts;
 export const selectContactsIsLoading = state => state.contacts.isLoading;
 export const selectContactsError = state => state.contacts.error;

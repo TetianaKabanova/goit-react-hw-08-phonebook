@@ -1,5 +1,22 @@
 import styled from '@emotion/styled';
 
+export const RegistrePageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${props => props.theme.space[4]}px;
+  padding: ${props => props.theme.space[4]}px;
+`;
+
+export const Title = styled.h1`
+  display: block;
+  text-align: center;
+  margin-top: ${props => props.theme.space[5]}px;
+  margin-bottom: ${props => props.theme.space[5]}px;
+  padding: ${props => props.theme.space[4]}px;
+  font-size: ${props => props.theme.fontSize.xl};
+  color: ${props => props.theme.colors.primary};
+`;
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -31,6 +48,7 @@ export const SubmitButton = styled.button`
   align-items: center;
   background-color: ${p => p.theme.colors.primary};
   font-size: ${p => p.theme.fontSize.m};
+
   padding-left: ${props => props.theme.spacing(5)};
   padding-right: ${props => props.theme.spacing(5)};
   padding-top: ${props => props.theme.spacing(2)};
@@ -45,11 +63,6 @@ export const SubmitButton = styled.button`
     background-color: ${p => p.theme.colors.success};
     box-shadow: ${p => p.theme.boxShadow.boxShadow};
   }
-`;
-
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 export const Icon = styled.span`
