@@ -9,7 +9,7 @@ import {
 const initialState = {
   isLoading: false,
   error: null,
-  userData: { name: null, email: null },
+  userData: null,
   token: null,
   authentificated: false,
 };
@@ -22,6 +22,7 @@ const authSlice = createSlice({
       .addCase(registerUserThunk.pending, state => {
         state.isLoading = true;
         state.error = null;
+        state.authentificated = false;
       })
       .addCase(registerUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -36,6 +37,7 @@ const authSlice = createSlice({
       .addCase(loginUserThunk.pending, state => {
         state.isLoading = true;
         state.error = null;
+        state.authentificated = false;
       })
       .addCase(loginUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -50,6 +52,7 @@ const authSlice = createSlice({
       .addCase(refreshUserThunk.pending, state => {
         state.isLoading = true;
         state.error = null;
+        state.authentificated = false;
       })
       .addCase(refreshUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -63,6 +66,7 @@ const authSlice = createSlice({
       .addCase(logoutUserThunk.pending, state => {
         state.isLoading = true;
         state.error = null;
+        state.authentificated = false;
       })
       .addCase(logoutUserThunk.fulfilled, (state, action) => {
         state.isLoading = false;

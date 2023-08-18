@@ -39,10 +39,7 @@ export const ContactList = () => {
           <Contact>
             {name}: {number}
           </Contact>
-          <DeleteButton
-            type="button"
-            onClick={() => handleDeleteContact({ id, name })}
-          >
+          <DeleteButton type="button" onClick={() => handleDeleteContact(id)}>
             Delete
             <Icon>
               <UserDeleteOutlined />

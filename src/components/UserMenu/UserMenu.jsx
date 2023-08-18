@@ -3,10 +3,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserName } from 'redux/authReducer';
 import {
+  Icon,
   StyledLogOutButton,
   UserHello,
   UserMenuContainer,
 } from './UserMenu.styled';
+import { logoutUserThunk } from 'redux/operations';
 
 const UserMenu = () => {
   const userName = useSelector(selectUserName);

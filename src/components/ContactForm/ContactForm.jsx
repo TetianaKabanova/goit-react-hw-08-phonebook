@@ -34,11 +34,9 @@ export const ContactForm = () => {
         `Contact with name ${newContact.name} already exists!`,
         notifyOptions
       );
-
       return false;
     } else {
       dispatch(addContactThunk(newContact));
-
       toast.success(
         `Contact with name ${newContact.name} is added to the contact list!`,
         notifyOptions
