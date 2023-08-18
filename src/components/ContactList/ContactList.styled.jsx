@@ -4,7 +4,6 @@ export const ContactsList = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   gap: ${props => props.theme.spacing(2.5)};
 `;
 
@@ -38,4 +37,8 @@ export const DeleteButton = styled.button`
     background-color: ${p => p.theme.colors.danger};
     box-shadow: ${p => p.theme.boxShadow.boxShadow};
   }
+`;
+
+export const Icon = styled.span`
+  margin-left: ${props => props.theme.spacing(2)};
 `;

@@ -3,16 +3,24 @@ import {
   ContactItem,
   Contact,
   DeleteButton,
+  Icon,
 } from './ContactList.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { notifyOptions } from 'components/Notification/notifyOptions';
 import { deleteContactThunk } from 'redux/contactsOperations';
 import { UserDeleteOutlined } from '@ant-design/icons';
-import { selectUserContacts } from 'redux/contactsReducer';
+import {
+  selectContactsFilter,
+  selectUserContacts,
+} from 'redux/contactsReducer';
 
 export const ContactList = () => {
   const contacts = useSelector(selectUserContacts);
+  const filter = useSelector(selectContactsFilter);
+  const visibleContacts = contacts.filter(({ name }) =>
+    name.toLowerCase().includes(filter.toLowerCase())
+  );
   const dispatch = useDispatch();
 
   const handleDeleteContact = contactId => {
@@ -26,7 +34,7 @@ export const ContactList = () => {
 
   return (
     <ContactsList>
-      {contacts?.map(({ id, name, number }) => (
+      {visibleContacts?.map(({ id, name, number }) => (
         <ContactItem key={id}>
           <Contact>
             {name}: {number}
@@ -36,7 +44,9 @@ export const ContactList = () => {
             onClick={() => handleDeleteContact({ id, name })}
           >
             Delete
-            <UserDeleteOutlined />
+            <Icon>
+              <UserDeleteOutlined />
+            </Icon>
           </DeleteButton>
         </ContactItem>
       ))}

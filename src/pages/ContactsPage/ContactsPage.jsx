@@ -39,7 +39,6 @@ const ContactsPage = () => {
       <Section title="Contacts">
         {isLoading && <Spin />}
         {error && toast.error(`${errorMessage}`, notifyOptions)}
-
         <Filter title="Find contact by name" />
         <ContactList />
       </Section>
