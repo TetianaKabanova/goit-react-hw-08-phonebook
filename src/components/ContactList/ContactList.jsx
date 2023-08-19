@@ -18,18 +18,20 @@ import {
 export const ContactList = () => {
   const contacts = useSelector(selectUserContacts);
   const filter = useSelector(selectContactsFilter);
-  const visibleContacts = contacts.filter(({ name }) =>
+  const visibleContacts = contacts?.filter(({ name }) =>
     name.toLowerCase().includes(filter.toLowerCase())
   );
   const dispatch = useDispatch();
 
   const handleDeleteContact = contactId => {
-    dispatch(deleteContactThunk(contactId));
-
-    toast.info(
-      `Contact with with name ${contactId.name} has been deleted!`,
-      notifyOptions
-    );
+    const contactToDelete = contacts.find(contact => contact.id === contactId);
+    if (contactToDelete) {
+      dispatch(deleteContactThunk(contactId));
+      toast.info(
+        `Contact with name ${contactToDelete.name} has been deleted!`,
+        notifyOptions
+      );
+    }
   };
 
   return (
